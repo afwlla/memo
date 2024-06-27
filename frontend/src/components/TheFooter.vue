@@ -1,9 +1,11 @@
 <template>
-  <div>
-    <h1>FOOTER</h1>
-  </div>
+  <footer>&copy;2024 Memo App. All rights reseved.</footer>
 </template>
 
-<script setup></script>
-
-<style lang="scss" scoped></style>
+<style scoped>
+footer {
+  background: #f7f7f7;
+  border-top: 1px solid #eee;
+  padding: 25px;
+}
+</style>
