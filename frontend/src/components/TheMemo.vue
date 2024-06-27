@@ -12,8 +12,13 @@
 
 <script setup>
 import { ref } from 'vue'
+import axios from 'axios'
 
-const data = ref(['내용1', '내용2', '내용3', '내용4', '내용5'])
+axios.get('/api/memos').then((res) => {
+  data.value = res.data
+})
+
+const data = ref([''])
 
 const add = () => {
   data.value.push('추가메모')
