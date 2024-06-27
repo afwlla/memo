@@ -5,7 +5,7 @@
     </div>
 
     <ul>
-      <li v-for="(d, idx) in data" :key="d" @click="edit(idx)">{{ d }}</li>
+      <li v-for="d in data" :key="d.id" @click="edit(d.id)">{{ d.content }}</li>
     </ul>
   </div>
 </template>
@@ -14,22 +14,25 @@
 import { ref } from 'vue'
 import axios from 'axios'
 
-axios.get('/api/memos').then((res) => {
-  data.value = res.data
-})
+const data = ref([])
+const getMemos = async () =>
+  await axios.get('/api/memos').then((res) => {
+    data.value = res.data
+  })
+getMemos()
 
-const data = ref([''])
-
-const add = () => {
+const add = async () => {
   const content = prompt('추가할메모입력')
-  axios.post('/api/memos', { content }).then((res) => {
-    console.log(res)
+  await axios.post('/api/memos', { content }).then(() => {
+    getMemos()
   })
 }
-const edit = (idx) => {
+const edit = async (id) => {
   const content = prompt('변경할메모입력')
-  data.value[idx] = content
-  axios.put('/api/memos' + idx, { content })
+  data.value[id] = content
+  await axios.put('/api/memos/' + id, { content }).then(() => {
+    getMemos()
+  })
 }
 </script>
 
